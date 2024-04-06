@@ -1,4 +1,5 @@
 using ExamBreaker.API;
+using ExamBreaker.Application;
 using ExamBreaker.Infrastructure;
 using ExamBreaker.Infrastructure.Persistence;
 using FastEndpoints;
@@ -7,8 +8,9 @@ using FastEndpoints.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddWebApiServices();
+builder.Services.RegisterWebApiServices();
+builder.Services.RegisterApplicationServices();
+builder.Services.RegisterInfrastructureServices(builder.Configuration);
 
 builder.Services.AddControllers();
 

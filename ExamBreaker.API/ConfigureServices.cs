@@ -5,11 +5,11 @@ namespace ExamBreaker.API;
 
 public static class ConfigureServices
 {
-    public static IServiceCollection AddWebApiServices(this IServiceCollection services)
+    public static IServiceCollection RegisterWebApiServices(this IServiceCollection services)
     {
         services
             .AddFastEndpoints()
-            .SwaggerDocument();
+            .SwaggerDocument(opt => opt.AutoTagPathSegmentIndex = 2);
 
         return services;
     }
