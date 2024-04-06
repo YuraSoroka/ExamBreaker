@@ -1,17 +1,16 @@
+using ExamBreaker.API;
 using ExamBreaker.Infrastructure;
 using ExamBreaker.Infrastructure.Persistence;
+using FastEndpoints;
+using FastEndpoints.Swagger;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddWebApiServices();
 
 builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 
@@ -19,15 +18,15 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     await app.InitialiseDatabaseAsync();
-
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseRouting();
+
+app.UseFastEndpoints()
+    .UseSwaggerGen();
 
 app.Run();
