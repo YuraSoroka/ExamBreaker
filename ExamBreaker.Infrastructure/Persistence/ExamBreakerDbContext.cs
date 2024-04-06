@@ -1,4 +1,4 @@
-﻿using ExamBreaker.Domain;
+﻿using ExamBreaker.Domain.Agggregates.SingleSelects;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamBreaker.Infrastructure.Persistence;
@@ -9,7 +9,7 @@ public class ExamBreakerDbContext : DbContext
         : base(options)
     { }
 
-    public DbSet<Hotspot> Hotspots => Set<Hotspot>();
+    public DbSet<SingleSelectQuestion> Hotspots => Set<SingleSelectQuestion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
