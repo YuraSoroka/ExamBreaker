@@ -10,7 +10,7 @@ public sealed class SingleSelectQuestion : AggregateRoot<SingleSelectId, Guid>
 
     public string Question { get; private set; }
 
-    public IReadOnlyList<QuestionOption> Options => _questionOptions.AsReadOnly();
+    public IReadOnlyList<QuestionOption> QuestionOptions => _questionOptions.AsReadOnly();
 
     private SingleSelectQuestion(
         SingleSelectId id,

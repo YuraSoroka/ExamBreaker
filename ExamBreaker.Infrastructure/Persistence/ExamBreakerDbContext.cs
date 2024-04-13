@@ -9,7 +9,7 @@ public class ExamBreakerDbContext : DbContext
         : base(options)
     { }
 
-    public DbSet<SingleSelectQuestion> Hotspots => Set<SingleSelectQuestion>();
+    public DbSet<SingleSelectQuestion> SingleSelectQuestions => Set<SingleSelectQuestion>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

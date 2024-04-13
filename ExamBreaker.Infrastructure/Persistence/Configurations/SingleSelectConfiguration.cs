@@ -30,7 +30,7 @@ internal sealed class SingleSelectConfiguration : IEntityTypeConfiguration<Singl
     private void ConfigureQuestionOptionsTable(EntityTypeBuilder<SingleSelectQuestion> builder)
     {
 
-        builder.OwnsMany(q => q.Options, optionsBuilder =>
+        builder.OwnsMany(q => q.QuestionOptions, optionsBuilder =>
         {
             optionsBuilder.ToTable("SingleSelectOptions");
 
@@ -46,5 +46,9 @@ internal sealed class SingleSelectConfiguration : IEntityTypeConfiguration<Singl
                     id => id.Value,
                     value => QuestionOptionId.Create(value));
         });
+
+        builder.Metadata
+            .FindNavigation(nameof(SingleSelectQuestion.QuestionOptions))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
