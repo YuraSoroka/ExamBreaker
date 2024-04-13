@@ -31,4 +31,8 @@ public sealed class SingleSelectQuestion : AggregateRoot<SingleSelectId, Guid>
             question,
             questionOptions ?? new());
     }
+
+    // need this for suitable constructor in migration
+    protected SingleSelectQuestion()
+    { }
 }
