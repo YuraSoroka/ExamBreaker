@@ -34,4 +34,9 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
     {
         return Id.GetHashCode();
     }
+
+
+    // need this for suitable constructor in migration
+    protected Entity()
+    { }
 }
