@@ -1,16 +1,34 @@
 ﻿using ExamBreaker.Domain.Agggregates.SingleSelects.Entities;
+using ExamBreaker.Domain.Agggregates.SingleSelects.ValueObjects;
+using ExamBreaker.Domain.Common.Models;
 
 namespace ExamBreaker.Domain.Agggregates.SingleSelects;
 
-public class SingleSelectQuestion
+public sealed class SingleSelectQuestion : AggregateRoot<SingleSelectId, Guid>
 {
-    public Guid Id { get; private set; }
+    private readonly List<QuestionOption> _questionOptions = new();
+
     public string Question { get; private set; }
 
-    public List<Option> Options { get; private set; }
+    public IReadOnlyList<QuestionOption> Options => _questionOptions.AsReadOnly();
 
-    public SingleSelectQuestion(string question)
+    private SingleSelectQuestion(
+        SingleSelectId id,
+        string question,
+        List<QuestionOption>? questionOptions)
+        : base(id)
     {
         Question = question;
+        _questionOptions = questionOptions;
+    }
+
+    public static SingleSelectQuestion Create(
+        string question,
+        List<QuestionOption>? questionOptions = null)
+    {
+        return new SingleSelectQuestion(
+            SingleSelectId.CreateUnique(),
+            question,
+            questionOptions ?? new());
     }
 }
