@@ -29,16 +29,17 @@ internal sealed class SingleSelectConfiguration : IEntityTypeConfiguration<Singl
 
     private void ConfigureQuestionOptionsTable(EntityTypeBuilder<SingleSelectQuestion> builder)
     {
-
+    
         builder.OwnsMany(q => q.QuestionOptions, optionsBuilder =>
         {
             optionsBuilder.ToTable("SingleSelectOptions");
-
+    
             optionsBuilder
                 .WithOwner()
                 .HasForeignKey("QuestionId");
-
+    
             optionsBuilder.HasKey(x => x.Id);
+
             optionsBuilder
                 .Property(x => x.Id)
                 .ValueGeneratedNever()
@@ -46,7 +47,7 @@ internal sealed class SingleSelectConfiguration : IEntityTypeConfiguration<Singl
                     id => id.Value,
                     value => QuestionOptionId.Create(value));
         });
-
+    
         builder.Metadata
             .FindNavigation(nameof(SingleSelectQuestion.QuestionOptions))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);

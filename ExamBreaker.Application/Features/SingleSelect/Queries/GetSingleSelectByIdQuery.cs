@@ -1,13 +1,24 @@
-﻿using MediatR;
+﻿using ExamBreaker.Application.Common.Interfaces.Persistence;
+using ExamBreaker.Domain.Agggregates.SingleSelects;
+using ExamBreaker.Domain.Agggregates.SingleSelects.ValueObjects;
+using MediatR;
 
 namespace ExamBreaker.Application.Features.SingleSelect.Queries;
 
-public record GetSingleSelectByIdQuery(Guid Id) : IRequest<string>;
+public record GetSingleSelectByIdQuery(Guid Id) : IRequest<SingleSelectQuestion?>;
 
-public class GetSingleSelectByIdQueryHandler : IRequestHandler<GetSingleSelectByIdQuery, string>
+public class GetSingleSelectByIdQueryHandler : IRequestHandler<GetSingleSelectByIdQuery, SingleSelectQuestion?>
 {
-    public Task<string> Handle(GetSingleSelectByIdQuery request, CancellationToken cancellationToken)
+    private readonly ISingleSelectRepository _singleSelectRepository;
+
+    public GetSingleSelectByIdQueryHandler(ISingleSelectRepository singleSelectRepository)
     {
-        return Task.FromResult(request.Id.ToString());
+        _singleSelectRepository = singleSelectRepository;
+    }
+
+    public async Task<SingleSelectQuestion?> Handle(GetSingleSelectByIdQuery request, CancellationToken cancellationToken)
+    {
+        var singleSelectId = SingleSelectId.Create(request.Id);
+        return _singleSelectRepository.GetById(singleSelectId);
     }
 }

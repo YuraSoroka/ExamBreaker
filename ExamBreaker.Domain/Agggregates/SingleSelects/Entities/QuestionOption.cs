@@ -19,4 +19,9 @@ public sealed class QuestionOption : Entity<QuestionOptionId>
     {
         return new QuestionOption(QuestionOptionId.CreateUnique(), value, isCorrect);
     }
+
+    protected QuestionOption()
+    {
+        
+    }
 }

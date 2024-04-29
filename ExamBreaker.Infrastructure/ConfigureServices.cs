@@ -1,4 +1,6 @@
-﻿using ExamBreaker.Infrastructure.Persistence;
+﻿using ExamBreaker.Application.Common.Interfaces.Persistence;
+using ExamBreaker.Infrastructure.Persistence;
+using ExamBreaker.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +17,7 @@ public static class ConfigureServices
         services.AddDbContext<ExamBreakerDbContext>((sp, options) =>
         {
             options.UseSqlServer(
-                connectionString, 
+                connectionString,
                 opt =>
                 {
                     opt.MigrationsAssembly(typeof(ExamBreakerDbContext).Assembly.FullName);
@@ -25,6 +27,15 @@ public static class ConfigureServices
         });
 
         services.AddScoped<ExamBreakerDbContextInitialiser>();
+
+        services.RegisterRepositories();
+
+        return services;
+    }
+
+    public static IServiceCollection RegisterRepositories(this IServiceCollection services)
+    {
+        services.AddScoped<ISingleSelectRepository, SingleSelectRepository>();
 
         return services;
     }

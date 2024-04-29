@@ -6,8 +6,9 @@ public abstract class AggregateRoot<TId, TIdType> : Entity<TId>
     public new AggregateRootId<TIdType> Id { get; protected set; }
 
     protected AggregateRoot(TId id)
-        : base(id)
-    { }
+    {
+        Id = id;
+    }
 
 
     // need this for suitable constructor in migration
